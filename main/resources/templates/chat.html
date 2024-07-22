@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+            /* Add CSS styles for chat messages */
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align messages to the left */
+            margin-bottom: 10px;
+        }
+        .item .icon {
+            margin-right: 10px;
+        }
+        .item .msg {
+            background-color: #c4a8d7;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+        .item.right {
+            align-items: flex-end; /* Align user messages to the right */
+        }
+        .item.right .msg {
+            background-color: #4e2b5b;
+            color: white;
+            align-self: flex-end;
+        }
+
+    </style>
+    <title>Stellen Sie mir Fragen!</title>
+</head>
+<body style="background-image: url('/background.png'); background-size: cover; background-repeat: no-repeat;">
+<div class="wrapper">
+    <div class="title">Stellen Sie mir Fragen!</div>
+    <div class="box" id="chat-box" style="height: 600px; overflow-y: auto;" role="log" aria-live="polite">
+        <div th:each="message : ${messages}" th:attr="class=${message.isUser} ? 'item right' : 'item left'">
+            <div th:unless="${message.isUser}" class="image-holder">
+                <img src="chatbot_image.png" alt="Chatbot Image" style="width: 40px; height: 40px; border-radius: 50%;">
+            </div>
+            <div class="msg" th:text="${message.text}"></div>
+        </div>
+    </div>
+    <div class="typing-area">
+        <form action="#" th:action="@{'/chat'}" method="post" class="input-field">
+            <label for="userInput">Text Input:</label>
+            <input type="text" name="userInput" id="userInput" placeholder="Wie könnte ich Ihnen helfen?" required/>
+            <button type="submit"><i class="fa fa-send"></i></button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
